@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: testeintegracao
+  devtools:
+    restart:
+      enabled: 'false'
+  datasource:
+    password: ''
+    username: sa
+    url: jdbc:h2:mem:testdb
+    driverClassname: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: 'true'
+server:
+  address: 0.0.0.0
+  port: '8080'
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  metrics:
+    tags:
+      application: spring-boot-demo
+  endpoint:
+    health:
+      probes:
+        enabled: 'true'
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+    consumer:
+      group-id: paciente-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
