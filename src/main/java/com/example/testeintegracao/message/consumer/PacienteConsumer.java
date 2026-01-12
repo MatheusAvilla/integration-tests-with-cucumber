@@ -6,6 +6,8 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,9 +28,14 @@ public class PacienteConsumer {
         }
     }
 
+    // Possíveis melhorias:
+
+    // Persistir em um banco as mensagens que caírem na DLT, de modo que seja possível auditar e realizar correções manuais
+    // Adicionar métricas para monitorar a quantidade e tipos de erros que ocorrem
     @DltHandler
-    public void listenDLT(PacienteEvent pacienteEvent) {
-        log.info("DLT Recebida: {}", pacienteEvent);
+    public void listenDLT(PacienteEvent pacienteEvent,
+                          @Header(KafkaHeaders.DLT_EXCEPTION_MESSAGE) String error) {
+        log.error("DLT Recebida: {} >>>>>> Erro: {}", pacienteEvent, error);
     }
 
 }
