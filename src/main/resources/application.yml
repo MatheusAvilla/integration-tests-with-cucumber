@@ -45,3 +45,17 @@ management:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
+
+  ldap:
+    base: dc=springframework,dc=org
+    embedded:
+      base-dn: dc=springframework,dc=org
+      ldif: classpath:ldap-data.ldif
+      port: 8389
+      validation:
+        enabled: false
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.ldap: DEBUG
