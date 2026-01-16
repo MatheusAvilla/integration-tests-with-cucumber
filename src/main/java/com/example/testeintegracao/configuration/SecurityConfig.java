@@ -34,6 +34,10 @@ public class SecurityConfig {
                 .ldapAuthentication()
                 .userSearchBase("ou=people")
                 .userSearchFilter("(uid={0})")
+                .passwordCompare()
+                    .passwordEncoder(org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance())
+                    .passwordAttribute("userPassword")
+                .and()
                 .groupSearchBase("ou=groups")
                 .contextSource()
                 .url("ldap://localhost:8389/dc=springframework,dc=org");
