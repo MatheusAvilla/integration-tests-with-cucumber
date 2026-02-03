@@ -1,6 +1,19 @@
 version: "3.9"
 
 services:
+
+  postgres:
+    image: postgres:16
+    container_name: postgres-dev
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.6.0
     container_name: zookeeper
@@ -28,3 +41,6 @@ services:
 
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+volumes:
+  postgres_data:
