@@ -43,5 +43,12 @@ management:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      enable-auto-commit: false
+      max-poll-records: 100
+      #fetch-min-size: 50 # espera acumular dados (~50KB)
+      #fetch-max-wait: 500 # espera até 500ms
       properties:
         spring.json.trusted.packages: "*"
+    listener:
+      type: batch
+      ack-mode: manual
