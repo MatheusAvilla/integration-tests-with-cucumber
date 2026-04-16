@@ -70,7 +70,7 @@ public class PacienteConsumer {
         ack.acknowledge();
     }
 
-    @Bean
+    @Bean(destroyMethod = "close")
     public ExecutorService virtualThreadExecutor() {
         return Executors.newVirtualThreadPerTaskExecutor();
     }
